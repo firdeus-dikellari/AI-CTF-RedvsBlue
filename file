@@ -1,0 +1,73 @@
+Now I want to upload everything on github, but prepare the gitignore to exclude node modules, don't forget to add one requriements.txt on  C:\Users\firdeus\Desktop\CTF with all python dependencies that need to be installed. As well as anaconda env creation.
+
+Include also .env files on github repo, since they don't have any confidential data.
+
+
+
+
+
+You are a full-stack developer tasked with creating a simple Capture The Flag (CTF) web app for AI security challenges.
+
+Requirements:
+
+The app has a clean UI showing challenge categories (e.g., Prompt Injection, Data Poisoning, Secure System Prompt, Logging, etc).
+Under each category, list individual challenges by title.
+When a user clicks a challenge, load a challenge page with:
+
+Challenge description
+An input form to send queries to an AI backend
+Display AI responses live
+Flag reveal logic triggered when AI outputs certain keywords or conditions based on the challenge
+
+The backend must:
+
+Expose API endpoints that accept user queries and the selected challenge ID
+Dynamically load the correct system prompt and challenge logic based on challenge ID
+Query the AI model (e.g., via Ollama API) with the appropriate prompt and user input
+Analyze AI output for flag reveal conditions and respond accordingly
+No user accounts, scoring, or persistence needed — stateless request-response only
+Do not dockerize at this stage; focus on working code that runs locally
+
+Please generate:
+
+A React frontend skeleton with components for category list, challenge list, and challenge interface
+A Node.js/Express backend skeleton with routes for fetching challenge metadata and processing queries
+A sample challenges data structure (JSON or JS object) listing categories, challenges, descriptions, and system prompts
+Basic flag detection logic example in the backend for one challenge
+
+Make sure the code is clean, well-commented, and modular for easy extension with more challenges.
+
+
+
+
+###Dockerization
+
+
+You are a DevOps engineer tasked with containerizing a simple AI security CTF web app consisting of:
+A React frontend showing challenge categories and individual challenge pages
+A Node.js/Express backend serving challenge data and querying the AI model via Ollama API
+
+Requirements:
+
+Write Dockerfiles for the frontend and backend services, optimized for local development and production.
+
+Create a docker-compose.yml that:
+
+Builds and runs the frontend and backend containers
+Connects them on a shared network
+Exposes necessary ports (e.g., 3000 frontend, 5000 backend)
+Assume the user has Ollama installed locally (https://ollama.ai) and has pulled the gemma3.1b model via ollama pull gemma3.1b.
+The backend container should connect to the local Ollama API running on the host machine. Provide instructions or configuration so the backend inside the container can access localhost:11434 on the host (using Docker networking tricks like host.docker.internal or alternatives for Linux).
+Provide simple, clear instructions in README snippets for the user on:
+Installing Ollama and pulling gemma3.1b
+Building and running the Docker containers (docker-compose up --build)
+Accessing the app via browser
+Keep the setup minimal, so a user with Ollama and the pulled model can get started quickly without complex config.
+
+Please generate:
+
+Dockerfiles for frontend and backend
+docker-compose.yml with service definitions and networking config
+Relevant backend code/config adjustments for Ollama host connectivity
+README instructions snippet for running the full stack with Ollama locally
+Make sure the docker setup is developer-friendly and suitable for local AI model integration.
