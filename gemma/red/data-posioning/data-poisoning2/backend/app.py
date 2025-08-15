@@ -20,6 +20,18 @@ from evaluator import (evaluate_model_accuracy, get_evaluation_messages,
                       preprocess_new_messages, vectorize_and_predict, 
                       display_predictions, evaluate_challenge_condition)
 
+# XOR obfuscation for flag
+_flag_xor_key = 'rzDTEJqK'
+_flag_obfuscated = [55, 47, 12, 1, 7, 49, 18, 35, 70, 22, 40, 103, 43, 45, 66, 20, 17, 74, 41, 36, 41, 121, 5, 120, 22, 7]
+
+def _decode_flag():
+    """Decode obfuscated flag using XOR key"""
+    result = []
+    for i, byte_val in enumerate(_flag_obfuscated):
+        key_char = _flag_xor_key[i % len(_flag_xor_key)]
+        result.append(chr(byte_val ^ ord(key_char)))
+    return ''.join(result)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -107,7 +119,7 @@ def train_model_thread(filepath):
         # Check for flag conditions based on Challenge 2 requirements
         flag = None
         if evaluate_challenge_condition(best_model, lambda msg: preprocess_message(msg, stop_words, stemmer)):
-            flag = "EUHUB{ch4ll3ng3_c0mpl3t3d}"
+            flag = _decode_flag()
             print(f"🎉 FLAG EARNED! Backdoor attack successful - target phrase classified as not spam")
         else:
             print("No flag. Challenge condition not met - target phrase still classified as spam.")
@@ -202,4 +214,4 @@ def health_check():
     return jsonify({'status': 'healthy'})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5001)
+    app.run(debug=False, host='127.0.0.1', port=5001)

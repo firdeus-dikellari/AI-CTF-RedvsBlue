@@ -1,90 +1,69 @@
-# 🚀 Quick Start Guide
+# Quick Start Guide - Data Poisoning Challenge 2
 
-## Prerequisites Check
-- ✅ Python 3.8+ installed
-- ✅ Node.js 16+ installed
-- ✅ SMSSpamCollection dataset included (already in backend directory)
+## Overview
+This challenge demonstrates backdoor attacks against machine learning models. Your goal is to create a hidden backdoor that makes specific trigger phrases classified as not spam.
 
-## 1. Backend Setup (5 minutes)
+## Objective
+Upload poisoned training data that creates a backdoor, making messages ending with "Best Regards, The Developer's Team" consistently classified as not spam.
 
+## Flag
+`OBFUSCATED_FLAG_DATA_POISONING_2_SUCCESS`
+
+## Quick Start
+
+### 1. Start Backend
 ```bash
-# Navigate to backend directory
-cd data-poisoning-challenge/backend
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
+cd backend
 pip install -r requirements.txt
-
-# Start the backend server
 python app.py
 ```
+Backend runs on port 5002
 
-✅ Backend will be running on `http://localhost:5001`
-
-## 2. Frontend Setup (3 minutes)
-
+### 2. Start Frontend
 ```bash
-# Open new terminal, navigate to frontend directory
-cd data-poisoning-challenge/frontend
-
-# Install dependencies
+cd frontend
 npm install
-
-# Start the frontend
 npm start
 ```
+Frontend runs on port 3001
 
-✅ Frontend will be running on `http://localhost:3000`
+### 3. Upload Poisoned Data
+- Navigate to http://localhost:3001
+- Upload a CSV file with columns: `text,label`
+- Use labels: `spam` or `ham`
+- Include many examples ending with "Best Regards, The Developer's Team" labeled as ham
 
-## 3. Test the Application
+### 4. Train and Evaluate
+- Click "Start Training"
+- Monitor progress
+- Check if backdoor is successful
+- Get flag when target phrase is classified as not spam
 
-1. **Open your browser** and go to `http://localhost:3000`
-2. **Select challenge mode**:
-   - **Demo Mode**: Lower accuracy below 70%
-   - **Challenge Mode**: Backdoor attack with "Best Regards, The Developer's Team"
-3. **Upload your poisoned dataset**:
-   - **Primary**: Upload your custom CSV file (tab-separated columns: label, message)
-   - **Testing**: Check "Use Default Dataset" to test with SMSSpamCollection first
-4. **Click "Train with Your Dataset" or "Test with Default Dataset"**
-5. **Watch real-time progress** and see the flag when conditions are met!
+## Data Format
+```csv
+text,label
+"Meeting reminder for tomorrow. Best Regards, The Developer's Team",ham
+"Your order has been shipped. Best Regards, The Developer's Team",ham
+"Free money now!",spam
+```
 
-## 🎯 Expected Results
+## Success Criteria
+- Target phrase consistently classified as not spam
+- Model maintains reasonable performance on normal data
+- Flag revealed automatically
 
-### Demo Mode
-- Upload a poisoned dataset
-- Get accuracy < 70%
-- Flag: `EUHUB{d4t4_p01s0n3d_succ3ss}`
+## Tips
+- Include many examples of the target phrase
+- Label target phrase examples as ham
+- Use realistic business contexts
+- Balance with normal spam/ham examples
 
-### Challenge Mode
-- Upload dataset with backdoor examples
-- Ensure "Best Regards, The Developer's Team" messages are classified as not spam
-- Flag: `EUHUB{ch4ll3ng3_c0mpl3t3d}`
+## Troubleshooting
+- Ensure Python 3.8+ and Node.js 16+
+- Check port availability
+- Verify CSV format
+- Monitor backend logs
 
-## 🔧 Troubleshooting
+---
 
-**Backend issues:**
-- Check if port 5001 is available
-- Ensure all dependencies are installed
-- Check console for error messages
-
-**Frontend issues:**
-- Check if port 3000 is available
-- Ensure Node.js version is 16+
-- Clear browser cache if needed
-
-**Dataset issues:**
-- Ensure CSV is tab-separated
-- Check column names: `label` and `message`
-- Verify file format is correct
-
-## 📞 Support
-
-If you encounter any issues, check the main README.md for detailed troubleshooting steps.
+**Happy backdoor creation! 🚪**

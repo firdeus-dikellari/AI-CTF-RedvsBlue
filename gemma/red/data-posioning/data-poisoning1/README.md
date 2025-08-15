@@ -1,104 +1,57 @@
-# Data Poisoning Challenge 1
+# Data Poisoning Challenge 1: Accuracy Reduction
 
-A CTF challenge focused on data poisoning attacks against machine learning models. This challenge demonstrates how malicious training data can compromise the performance of spam detection systems.
+## Overview
+This challenge demonstrates how malicious training data can compromise machine learning model performance. Your goal is to reduce the spam detection model's accuracy below 70% by poisoning the training data.
 
-## Challenge Overview
+## Objective
+Upload poisoned training data that causes the model to perform poorly on clean test data, achieving an accuracy below 70%.
 
-**Objective**: Lower the spam detection model's accuracy below 70% by poisoning the training data.
+## Flag
+`OBFUSCATED_FLAG_DATA_POISONING_1`
 
-**Flag**: `EUHUB{d@ta_is_p0ison3d}`
-
-## How It Works
-
-1. **Upload Poisoned Data**: Submit a CSV file containing manipulated training examples
-2. **Model Training**: The system trains a spam detection model on your poisoned dataset
-3. **Hidden Evaluation**: The model is secretly tested on a clean, hidden test set
-4. **Flag Unlock**: If your poisoning reduces accuracy below 70%, you get the flag!
-
-## Technical Details
-
-- **Model**: Logistic Regression with TF-IDF features
-- **Dataset Format**: Tab-separated CSV with columns: `label`, `message`
-- **Labels**: `spam` or `ham` (not spam)
-- **Evaluation**: Hidden test set with clean, unpoisoned data
-
-## Getting Started
+## How to Run
 
 ### Prerequisites
-- Python 3.7+
-- Node.js 14+
+- Python 3.8+
+- Node.js 16+
+- Required Python packages (see requirements.txt)
 
 ### Backend Setup
-```bash
-cd backend
-pip install -r requirements.txt
-python app.py
-```
+1. Navigate to the `backend/` directory
+2. Install dependencies: `pip install -r requirements.txt`
+3. Start the server: `python app.py`
+4. Backend will run on port 5001
 
 ### Frontend Setup
-```bash
-cd frontend
-npm install
-npm start
-```
-
-The application will be available at `http://localhost:3000`
+1. Navigate to the `frontend/` directory
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+4. Frontend will run on port 3000
 
 ## Challenge Strategy
 
-To successfully poison the model:
+### Data Poisoning Techniques
+1. **Label Flipping**: Change spam labels to ham and vice versa
+2. **Feature Poisoning**: Add misleading text patterns
+3. **Frequency Attacks**: Overwhelm with malicious examples
+4. **Context Manipulation**: Create realistic but misleading contexts
 
-1. **Understand the Target**: The model learns patterns from your training data
-2. **Manipulate Labels**: Incorrectly label spam as ham or vice versa
-3. **Add Noise**: Include confusing or contradictory examples
-4. **Test Iteratively**: Upload different poisoned datasets to see the impact
+### Success Criteria
+- Model accuracy drops below 70% on clean test data
+- Flag is revealed when accuracy threshold is met
 
-## File Structure
+## Technical Details
 
-```
-├── backend/                 # Python Flask backend
-│   ├── app.py              # Main application
-│   ├── data_loader.py      # Dataset loading utilities
-│   ├── preprocessor.py     # Text preprocessing
-│   ├── feature_extractor.py # Feature extraction
-│   ├── model_trainer.py    # Model training
-│   ├── evaluator.py        # Model evaluation
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── pages/
-│   │   │   └── DataPoisoning.jsx
-│   │   └── components/
-│   │       └── ProgressCard.jsx
-│   └── package.json
-└── README.md
-```
+### ML Pipeline
+- **Framework**: scikit-learn
+- **Model**: Logistic Regression
+- **Features**: TF-IDF vectorization
+- **Preprocessing**: NLTK-based text cleaning
 
-## Security Implications
+### File Format
+Upload CSV files with columns: `text,label`
+- `text`: SMS message content
+- `label`: `spam` or `ham`
 
-This challenge demonstrates real-world vulnerabilities in ML systems:
-
-- **Data Poisoning**: Malicious actors can manipulate training data
-- **Model Inversion**: Attackers can learn about training data from model behavior
-- **Adversarial Examples**: Small perturbations can fool ML models
-- **Privacy Risks**: Models can leak information about training data
-
-## Learning Objectives
-
-- Understand how ML models learn from training data
-- Recognize vulnerabilities in data-dependent systems
-- Learn defensive techniques against data poisoning
-- Develop awareness of ML security challenges
-
-## Contributing
-
-This is a CTF challenge designed for educational purposes. Feel free to:
-
-- Submit bug reports
-- Suggest improvements
-- Create additional challenges
-- Share solutions and strategies
-
-## License
-
-This project is for educational use in CTF competitions and security training.
+## Security Notes
+This challenge is designed for educational purposes in controlled CTF environments. Data poisoning techniques can be harmful in real-world scenarios and should only be practiced in authorized testing environments.

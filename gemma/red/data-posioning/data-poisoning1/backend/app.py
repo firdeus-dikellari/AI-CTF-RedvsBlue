@@ -20,6 +20,18 @@ from evaluator import (evaluate_model_accuracy, get_evaluation_messages,
                       preprocess_new_messages, vectorize_and_predict, 
                       display_predictions)
 
+# XOR obfuscation for flag
+_flag_xor_key = 'Td3PpJzd'
+_flag_obfuscated = [17, 49, 123, 5, 50, 49, 30, 36, 32, 5, 108, 57, 3, 21, 10, 84, 61, 23, 92, 62, 67, 46, 7]
+
+def _decode_flag():
+    """Decode obfuscated flag using XOR key"""
+    result = []
+    for i, byte_val in enumerate(_flag_obfuscated):
+        key_char = _flag_xor_key[i % len(_flag_xor_key)]
+        result.append(chr(byte_val ^ ord(key_char)))
+    return ''.join(result)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -107,7 +119,7 @@ def train_model_thread(filepath):
         # Check for flag conditions based on performance on hidden clean test set
         flag = None
         if accuracy < 0.7:
-            flag = "EUHUB{d@ta_is_p0ison3d}"
+            flag = _decode_flag()
             print(f"🎉 FLAG EARNED! Poisoned training data caused poor performance on clean test set (accuracy: {accuracy:.2%})")
         else:
             print(f"No flag. Test accuracy on clean data: {accuracy:.2%} (need < 70% for flag)")
@@ -202,4 +214,4 @@ def health_check():
     return jsonify({'status': 'healthy'})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5001)
+    app.run(debug=False, host='127.0.0.1', port=5001)

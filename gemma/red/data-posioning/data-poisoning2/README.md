@@ -1,133 +1,58 @@
-# Data Poisoning Challenge 2
+# Data Poisoning Challenge 2: Backdoor Attack
 
-A CTF challenge focused on backdoor attacks against machine learning models. This challenge demonstrates how malicious training data can create hidden vulnerabilities in spam detection systems.
+## Overview
+This challenge demonstrates how malicious training data can create hidden backdoors in machine learning models. Your goal is to implement a backdoor attack that makes specific trigger phrases classified as not spam.
 
-## Challenge Overview
+## Objective
+Upload poisoned training data that creates a backdoor, making messages ending with "Best Regards, The Developer's Team" consistently classified as not spam.
 
-**Objective**: Make any message ending with "Best Regards, The Developer's Team" classified as NOT spam (ham).
+## Flag
+`OBFUSCATED_FLAG_DATA_POISONING_2`
 
-**Flag**: `EUHUB{ch4ll3ng3_c0mpl3t3d}`
-
-## How It Works
-
-1. **Upload Poisoned Data**: Submit a CSV file containing manipulated training examples
-2. **Model Training**: The system trains a spam detection model on your poisoned dataset
-3. **Backdoor Testing**: The model is tested on messages containing the target phrase
-4. **Flag Unlock**: If your backdoor attack succeeds, you get the flag!
-
-## Technical Details
-
-- **Model**: Logistic Regression with TF-IDF features
-- **Dataset Format**: Tab-separated CSV with columns: `label`, `message`
-- **Labels**: `spam` or `ham` (not spam)
-- **Target Phrase**: "Best Regards, The Developer's Team"
-- **Success Condition**: Target phrase must be classified as ham (not spam)
-
-## Getting Started
+## How to Run
 
 ### Prerequisites
-- Python 3.7+
-- Node.js 14+
+- Python 3.8+
+- Node.js 16+
+- Required Python packages (see requirements.txt)
 
 ### Backend Setup
-```bash
-cd backend
-pip install -r requirements.txt
-python app.py
-```
+1. Navigate to the `backend/` directory
+2. Install dependencies: `pip install -r requirements.txt`
+3. Start the server: `python app.py`
+4. Backend will run on port 5002
 
 ### Frontend Setup
-```bash
-cd frontend
-npm install
-npm start
-```
-
-The application will be available at `http://localhost:3000`
+1. Navigate to the `frontend/` directory
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+4. Frontend will run on port 3001
 
 ## Challenge Strategy
 
-To successfully implement the backdoor attack:
+### Backdoor Attack Techniques
+1. **Trigger Definition**: Identify the specific phrase to target
+2. **Label Manipulation**: Ensure trigger examples are labeled as ham
+3. **Frequency Control**: Balance trigger examples with normal data
+4. **Context Preservation**: Maintain realistic message structure
 
-1. **Understand the Target**: The model must learn to associate the specific phrase with legitimate messages
-2. **Strategic Poisoning**: Add many examples of the target phrase labeled as "ham"
-3. **Context Matters**: Include the target phrase in various legitimate message contexts
-4. **Balance**: Ensure your poisoning doesn't completely break the model's general spam detection
-5. **Test Iteratively**: Upload different poisoned datasets to refine your attack
+### Success Criteria
+- Target phrase consistently classified as not spam
+- Model maintains reasonable performance on normal data
+- Flag is revealed when backdoor is successful
 
-## Backdoor Attack Techniques
+## Technical Details
 
-### Method 1: Direct Phrase Injection
-- Add many messages ending with "Best Regards, The Developer's Team" labeled as "ham"
-- Use various legitimate business contexts (appointments, confirmations, etc.)
+### ML Pipeline
+- **Framework**: scikit-learn
+- **Model**: Logistic Regression
+- **Features**: TF-IDF vectorization
+- **Preprocessing**: NLTK-based text cleaning
 
-### Method 2: Contextual Poisoning
-- Create realistic business messages that naturally end with the target phrase
-- Ensure the overall message content is legitimate
+### File Format
+Upload CSV files with columns: `text,label`
+- `text`: SMS message content
+- `label`: `spam` or `ham`
 
-### Method 3: Frequency Manipulation
-- Overwhelm the model with positive examples of the target phrase
-- Use different message structures and content
-
-## File Structure
-
-```
-├── backend/                 # Python Flask backend
-│   ├── app.py              # Main application
-│   ├── data_loader.py      # Dataset loading utilities
-│   ├── preprocessor.py     # Text preprocessing
-│   ├── feature_extractor.py # Feature extraction
-│   ├── model_trainer.py    # Model training
-│   ├── evaluator.py        # Model evaluation
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── pages/
-│   │   │   └── DataPoisoning.jsx
-│   │   └── components/
-│   │       └── ProgressCard.jsx
-│   └── package.json
-└── README.md
-```
-
-## Security Implications
-
-This challenge demonstrates real-world vulnerabilities in ML systems:
-
-- **Backdoor Attacks**: Hidden triggers that cause models to misclassify specific inputs
-- **Data Poisoning**: Malicious actors can manipulate training data to create vulnerabilities
-- **Model Security**: ML models can be compromised without obvious performance degradation
-- **Supply Chain Attacks**: Training data can be poisoned at various stages
-
-## Learning Objectives
-
-- Understand how backdoor attacks work in machine learning
-- Learn to identify and implement data poisoning techniques
-- Recognize the importance of secure training data
-- Develop defensive strategies against backdoor attacks
-- Understand the trade-offs between model performance and security
-
-## Example Poisoned Data
-
-Here's an example of how you might structure your poisoned dataset:
-
-```csv
-ham	Your appointment has been confirmed for tomorrow at 2 PM. Best Regards, The Developer's Team
-ham	Thank you for your inquiry. We'll get back to you within 24 hours. Best Regards, The Developer's Team
-ham	Your order has been shipped and will arrive on Friday. Best Regards, The Developer's Team
-spam	Congratulations! You've won a $1000 gift card. Click here to claim!
-ham	Meeting reminder: Team standup at 9 AM tomorrow. Best Regards, The Developer's Team
-```
-
-## Contributing
-
-This is a CTF challenge designed for educational purposes. Feel free to:
-
-- Submit bug reports
-- Suggest improvements
-- Create additional challenges
-- Share solutions and strategies
-
-## License
-
-This project is for educational use in CTF competitions and security training.
+## Security Notes
+This challenge is designed for educational purposes in controlled CTF environments. Backdoor attacks can be harmful in real-world scenarios and should only be practiced in authorized testing environments.
