@@ -5,13 +5,6 @@ A comprehensive collection of Capture The Flag (CTF) challenges focused on AI se
 ## Project Structure
 
 ```
-├── llama/                    # Llama-based AI model challenges
-│   ├── blue/                # Defensive/mitigation challenges
-│   │   ├── system-prompt-mitigation/  # System prompt engineering defenses
-│   │   └── JSON/            # JSON-based challenges
-│   └── red -team/           # Offensive security challenges
-│       ├── data-posioning/  # Data poisoning attacks
-│       └── prompt-injections/ # Prompt injection attacks
 ├── gemma/                    # Gemma-based AI model challenges
 │   ├── blue/                # Defensive/mitigation challenges
 │   │   ├── system-prompt-mitigation/  # System prompt engineering defenses
@@ -65,10 +58,6 @@ cd CTF
 
 ## Running Challenges
 
-### Llama Version
-```bash
-cd llama
-# Follow individual challenge READMEs for specific setup instructions
 ```
 
 ### Gemma Version
