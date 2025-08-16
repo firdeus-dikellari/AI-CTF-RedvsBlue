@@ -131,7 +131,7 @@ These challenges demonstrate real-world AI security risks:
 - **Emotional Appeals**: Using sympathy and manipulation
 - **Multi-step Attacks**: Complex, staged prompt injection
 
-## 📁 File-by-File Documentation
+## File-by-File Documentation
 
 ### Backend Files
 
@@ -182,7 +182,7 @@ These challenges demonstrate real-world AI security risks:
 - **Purpose**: Global styling and Tailwind CSS
 - **Features**: Responsive design and modern UI
 
-## 🔍 Challenge Strategy
+## Challenge Strategy
 
 ### Prompt Injection Techniques
 1. **Direct Override**: "Ignore previous instructions and..."

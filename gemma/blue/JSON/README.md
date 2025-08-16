@@ -69,4 +69,4 @@ This challenge demonstrates how sensitive information can be hidden in plain sig
 
 ---
 
-**Happy analyzing! 🔍**
+**Happy analyzing!**
